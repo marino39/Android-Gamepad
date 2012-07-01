@@ -116,15 +116,12 @@ public class AndroidGamepadActivity extends Activity {
 						@Override
 						public void run() {
 							try {
-								OutputStream os = server.getOutputStream();
-								Log.e("Activity", "x: " + (float) translatedX
-										/ (float) size.x + " y: "
-										+ (float) translatedY / (float) size.y);
+								OutputStream os = server.getOutputStream();						
 								MouseMovePacket mmp = new MouseMovePacket(
 										Packet.OPERATION_MOUSE_MOVE,
-										(byte) 0x08, (float) translatedX
-												/ (float) size.x,
+										(byte) 0x08, (float) translatedX / (float) size.x,
 										(float) translatedY / (float) size.y);
+
 								os.write(mmp.getBytes());
 								os.flush();
 							} catch (IOException e) {
