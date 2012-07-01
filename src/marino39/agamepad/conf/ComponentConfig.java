@@ -5,9 +5,9 @@ import marino39.ui.components.UIComponent;
 public interface ComponentConfig {
 	
 	/**
-	 * Get's UIComponent.
+	 * Get's configured UIComponent.
 	 * @param c
 	 */
-	public void getConfiguredComponent(UIComponent c);
+	public UIComponent getConfiguredComponent();
 	
 }

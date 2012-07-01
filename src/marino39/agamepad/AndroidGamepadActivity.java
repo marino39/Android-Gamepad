@@ -43,10 +43,11 @@ public class AndroidGamepadActivity extends Activity {
         setContentView(main);
         
         // Configuration
-        Configuration c = Configuration.getDefaultConfiguration();
+        Configuration c = Configuration.getDefaultConfiguration(getResources());
+        c.populate(main);
         
         // Server Connection
-        Bundle extras = getIntent().getExtras();
+        /*Bundle extras = getIntent().getExtras();
 		if (extras == null) {
 			return;
 		}
@@ -443,7 +444,7 @@ public class AndroidGamepadActivity extends Activity {
 				}).start();
 			}
 		});
-        main.addUIComponent(b5);
+        main.addUIComponent(b5);*/
         
         final PowerManager pm = (PowerManager) getSystemService(Context.POWER_SERVICE);
         this.mWakeLock = pm.newWakeLock(PowerManager.SCREEN_DIM_WAKE_LOCK, "My Tag");
