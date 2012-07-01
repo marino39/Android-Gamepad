@@ -8,7 +8,7 @@ import android.graphics.Paint;
 import android.graphics.Point;
 import android.view.MotionEvent;
 
-public class MouseController implements UIComponent, UITouchEventListener {
+public class MouseController implements UIComponent, Touchable {
 
 	private boolean visible = true;
 	private Point position = new Point(0, 0);
@@ -119,10 +119,18 @@ public class MouseController implements UIComponent, UITouchEventListener {
 		this.listener = listener;
 	}
 
+	/**
+	 * It says which pointer to choose in various Touch events.
+	 * @return
+	 */
 	public int getPointerID() {
 		return pointerID;
 	}
 
+	/**
+	 * Sets pointer for Touch event.
+	 * @return
+	 */
 	public void setPointerID(int pointerID) {
 		this.pointerID = pointerID;
 	}

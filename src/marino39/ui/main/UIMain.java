@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import marino39.ui.UITouchEventListener;
 import marino39.ui.components.MouseController;
+import marino39.ui.components.Touchable;
 import marino39.ui.components.UIComponent;
 
 import android.content.Context;
@@ -19,8 +20,19 @@ import android.view.View;
  */
 public class UIMain extends View {
 
+	/**
+	 * Tag for Android Logger
+	 */
 	private final String LOG_TAG = "[UIMain]";
+	
+	/**
+	 * Contains component list.
+	 */
 	private ArrayList<UIComponent> components = new ArrayList<UIComponent>();
+	
+	/**
+	 * Connects Pointer with Component
+	 */
 	private int[] ptcMapper = {-1, -1, -1, -1};
 	
 	public UIMain(Context context) {
@@ -80,7 +92,7 @@ public class UIMain extends View {
 				|| event.getAction() == MotionEvent.ACTION_POINTER_3_DOWN) {
 			for (int i = 0; i < components.size(); i++) {
 				UIComponent c = components.get(i);
-				if (c instanceof UITouchEventListener) {
+				if (c instanceof Touchable) {
 					Point pos = c.getPosition();
 					Point size = c.getSize();
 					int arrayIndex = translatePointerToArrayIndex(event);
@@ -93,7 +105,7 @@ public class UIMain extends View {
 							&& y < (pos.y + size.y)) {
 						Log.e(LOG_TAG, "" + arrayIndex);
 						ptcMapper[arrayIndex] = i;
-						((UITouchEventListener) c).onDown(event);
+						((Touchable) c).onDown(event);
 						invalidate();
 					}
 				}
@@ -106,14 +118,13 @@ public class UIMain extends View {
 			if (arrayIndex != -1 && ptcMapper[arrayIndex] != -1) {	
 				UIComponent c = components.get(ptcMapper[arrayIndex]);
 				ptcMapper[arrayIndex] = -1;
-				if (c instanceof UITouchEventListener) {
-					((UITouchEventListener) c).onUp(event);
+				if (c instanceof Touchable) {
+					((Touchable) c).onUp(event);
 					invalidate();
 				}
 			}
 		} else if (event.getAction() == MotionEvent.ACTION_MOVE) {
 			for (int i = 0; i < event.getPointerCount(); i++) {
-				Log.e(LOG_TAG, ""+event.getPointerId(i));
 				if (i != -1 && ptcMapper[i] != -1) {	
 					UIComponent c = components.get(ptcMapper[i]);
 					Point pos = c.getPosition();
@@ -125,11 +136,11 @@ public class UIMain extends View {
 
 					if (x > pos.x && x < (pos.x + size.x) && y > pos.y
 							&& y < (pos.y + size.y)) {
-						if (c instanceof UITouchEventListener) {
+						if (c instanceof Touchable) {
 							if (c instanceof MouseController) {
 								((MouseController) c).setPointerID(i);
 							}
-							((UITouchEventListener) c).onMove(event);
+							((Touchable) c).onMove(event);
 						}
 					}
 				}

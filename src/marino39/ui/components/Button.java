@@ -14,7 +14,7 @@ import android.graphics.Rect;
 import android.util.Log;
 import android.view.MotionEvent;
 
-public class Button implements UIComponent, UITouchEventListener {
+public class Button implements UIComponent, Touchable {
 
 	private final String LOG_TAG = "[Button]";
 	
