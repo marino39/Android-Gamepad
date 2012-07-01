@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Configuration>
+	<Button label="f1" x="100" y="100" scale="0.5" emulatetButton="VK_1"></Button>
+</Configuration>

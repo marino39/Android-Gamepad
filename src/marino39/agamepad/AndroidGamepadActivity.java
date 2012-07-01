@@ -10,6 +10,7 @@ import marino39.ui.*;
 import marino39.ui.components.Image;
 import marino39.ui.components.MouseController;
 import marino39.ui.main.UIMain;
+import marino39.agamepad.conf.Configuration;
 import marino39.agamepad.protocol.*;
 
 import android.app.Activity;
@@ -40,6 +41,9 @@ public class AndroidGamepadActivity extends Activity {
         super.onCreate(savedInstanceState);
         UIMain main = new UIMain(this);
         setContentView(main);
+        
+        // Configuration
+        Configuration c = Configuration.getDefaultConfiguration();
         
         // Server Connection
         Bundle extras = getIntent().getExtras();
