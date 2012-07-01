@@ -4,19 +4,18 @@ import java.io.IOException;
 import java.io.OutputStream;
 import java.net.Socket;
 import java.net.UnknownHostException;
-import java.util.logging.Level;
 
 import marino39.agamepad.R;
-import marino39.ui.UITouchEventListener;
+import marino39.ui.*;
 import marino39.ui.components.Image;
 import marino39.ui.components.MouseController;
 import marino39.ui.main.UIMain;
+import marino39.agamepad.protocol.*;
 
 import android.app.Activity;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.graphics.Color;
 import android.graphics.Point;
 import android.os.Bundle;
 import android.os.PowerManager;
@@ -24,10 +23,6 @@ import android.os.PowerManager.WakeLock;
 import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.MotionEvent;
-import android.view.View;
-import android.widget.Button;
-
-import android.view.View.OnClickListener;
 
 public class AndroidGamepadActivity extends Activity {
     

@@ -1,12 +1,7 @@
 package marino39.ui.main;
 
-import java.io.IOException;
-import java.io.OutputStream;
 import java.util.ArrayList;
 
-import marino39.agamepad.KeyUpPacket;
-import marino39.agamepad.MouseMovePacket;
-import marino39.agamepad.Packet;
 import marino39.ui.UITouchEventListener;
 import marino39.ui.components.MouseController;
 import marino39.ui.components.UIComponent;

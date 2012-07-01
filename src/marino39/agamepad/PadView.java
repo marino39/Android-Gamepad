@@ -12,6 +12,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import marino39.agamepad.R;
+import marino39.agamepad.protocol.*;
 
 import android.content.Context;
 import android.graphics.Bitmap;
