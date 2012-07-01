@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-      package="marino39.d3gamepad"
+      package="marino39.agamepad"
       android:versionCode="1"
       android:versionName="1.0">
     <uses-sdk android:minSdkVersion="8" />
@@ -8,11 +8,11 @@
 	<uses-permission android:name="android.permission.WAKE_LOCK" />
 	
     <application android:icon="@drawable/icon" android:label="@string/app_name">
-        <activity android:name=".Diablo3GamePadActivity" android:theme="@android:style/Theme.NoTitleBar"
+        <activity android:name=".AndroidGamepadActivity" android:theme="@android:style/Theme.NoTitleBar"
                   android:label="@string/app_name">
 
         </activity>
-        <activity android:name="ServerListActivity" android:theme="@android:style/Theme.Dialog">
+        <activity android:name="marino39.agamepad.ServerListActivity" android:theme="@android:style/Theme.Dialog">
         	<intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />

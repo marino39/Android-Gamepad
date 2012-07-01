@@ -1,4 +1,4 @@
-package marino39.d3gamepad;
+package marino39.agamepad;
 
 public class KeyEvent {
   

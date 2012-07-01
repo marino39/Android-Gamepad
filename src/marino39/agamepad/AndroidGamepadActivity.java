@@ -1,4 +1,4 @@
-package marino39.d3gamepad;
+package marino39.agamepad;
 
 import java.io.IOException;
 import java.io.OutputStream;
@@ -6,6 +6,7 @@ import java.net.Socket;
 import java.net.UnknownHostException;
 import java.util.logging.Level;
 
+import marino39.agamepad.R;
 import marino39.ui.UITouchEventListener;
 import marino39.ui.components.Image;
 import marino39.ui.components.MouseController;
@@ -28,7 +29,7 @@ import android.widget.Button;
 
 import android.view.View.OnClickListener;
 
-public class Diablo3GamePadActivity extends Activity {
+public class AndroidGamepadActivity extends Activity {
     
 	private PadView diablo3Pad = null;
 	private WakeLock mWakeLock;

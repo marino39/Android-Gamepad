@@ -1,6 +1,6 @@
-package marino39.d3gamepad;
+package marino39.agamepad;
 
-import marino39.d3gamepad.PadView.PadButton;
+import marino39.agamepad.PadView.PadButton;
 import android.view.MotionEvent;
 
 public interface EventHandler {

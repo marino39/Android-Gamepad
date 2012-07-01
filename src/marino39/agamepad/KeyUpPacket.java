@@ -1,12 +1,15 @@
-package marino39.d3gamepad;
+package marino39.agamepad;
 
-public class KeyDownPacket implements Packet{
 
-	private byte op_id = Packet.OPERATION_KEY_DOWN; // 0x01
+
+
+public class KeyUpPacket implements Packet {
+
+	private byte op_id = Packet.OPERATION_KEY_UP; // 0x01
 	private byte len;
 	private byte key;
 	
-	public KeyDownPacket(byte[] b) {
+	public KeyUpPacket(byte[] b) {
 		this.op_id = b[0];
 		this.len = b[1];
 		this.key = b[2];
@@ -26,7 +29,7 @@ public class KeyDownPacket implements Packet{
 	
 	@Override
 	public String toString() {
-		return "KeyDownPacket op_id: " + op_id + " len: " + len + " key: " + key;
+		return "KeyUpPacket op_id: " + op_id + " len: " + len + " key: " + key;
 	}
 
 	public byte getOp_id() {
@@ -52,5 +55,5 @@ public class KeyDownPacket implements Packet{
 	public void setKey(byte key) {
 		this.key = key;
 	}
-	
+
 }

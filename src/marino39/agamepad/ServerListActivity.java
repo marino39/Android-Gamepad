@@ -1,4 +1,4 @@
-package marino39.d3gamepad;
+package marino39.agamepad;
 
 import java.io.IOException;
 import java.net.DatagramPacket;
@@ -6,6 +6,8 @@ import java.net.DatagramSocket;
 import java.net.SocketException;
 import java.util.ArrayList;
 import java.util.List;
+
+import marino39.agamepad.R;
 
 import android.app.Activity;
 import android.content.Context;
@@ -41,7 +43,7 @@ public class ServerListActivity extends Activity {
 						int arg2, long arg3) {
 			        TextView tx = (TextView) arg1;
 					String server = tx.getText().toString();
-					Intent runD3GamePad = new Intent(getApplicationContext(), Diablo3GamePadActivity.class);
+					Intent runD3GamePad = new Intent(getApplicationContext(), AndroidGamepadActivity.class);
 					runD3GamePad.putExtra("server", server);
 					startActivity(runD3GamePad);
 					

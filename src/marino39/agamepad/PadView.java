@@ -1,4 +1,4 @@
-package marino39.d3gamepad;
+package marino39.agamepad;
 
 
 import java.io.IOException;
@@ -10,6 +10,8 @@ import java.util.Calendar;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+
+import marino39.agamepad.R;
 
 import android.content.Context;
 import android.graphics.Bitmap;
