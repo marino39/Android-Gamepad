@@ -103,7 +103,6 @@ public class UIMain extends View {
 
 					if (x > pos.x && x < (pos.x + size.x) && y > pos.y
 							&& y < (pos.y + size.y)) {
-						Log.e(LOG_TAG, "" + arrayIndex);
 						ptcMapper[arrayIndex] = i;
 						((Touchable) c).onDown(event);
 						invalidate();

@@ -25,6 +25,11 @@ import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.MotionEvent;
 
+/**
+ * 
+ * @author Marcin Gorzynski
+ *
+ */
 public class AndroidGamepadActivity extends Activity {
     
 	private PadView diablo3Pad = null;

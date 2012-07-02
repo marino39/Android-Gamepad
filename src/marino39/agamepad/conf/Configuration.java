@@ -4,16 +4,19 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.lang.reflect.Field;
 import java.util.ArrayList;
+import java.util.Enumeration;
 import java.util.List;
 import java.util.Properties;
 import java.util.Set;
 import java.util.Vector;
+import java.util.regex.Pattern;
 
 import marino39.agamepad.KeyEvent;
 import marino39.agamepad.R;
 import marino39.agamepad.theme.Theme;
 import marino39.ui.components.UIComponent;
 import marino39.ui.main.UIMain;
+import marino39.utils.ReflectionUtils;
 import net.n3.nanoxml.IXMLParser;
 import net.n3.nanoxml.IXMLReader;
 import net.n3.nanoxml.StdXMLReader;
@@ -22,6 +25,7 @@ import net.n3.nanoxml.XMLException;
 import net.n3.nanoxml.XMLParserFactory;
 
 import android.content.res.Resources;
+import android.location.Address;
 import android.util.Log;
 
 public class Configuration {
@@ -132,103 +136,20 @@ public class Configuration {
 				Vector<XMLElement> children = xmlConfiguration.getChildren();
 				for (int i = 0; i < children.size(); i++) {
 					XMLElement child = children.get(i);
+					Object component = ReflectionUtils
+							.createClassInstance("marino39.agamepad.conf." + child.getName() + "Config");				
+					Properties p = child.getAttributes();
+					Enumeration<Object> e = p.keys();
 					
-					if (child.getName().equalsIgnoreCase("Button")) {
-						ButtonConfig bc = new ButtonConfig();
-						Properties p = child.getAttributes();
-						
-						String prop = p.getProperty("label");
-						if (prop != null) {
-							bc.setLabel(prop);
-						}
-						
-						prop = p.getProperty("x");
-						if (prop != null) {
-							bc.setX(Float.valueOf(prop));
-						}
-						
-						prop = p.getProperty("y");
-						if (prop != null) {
-							bc.setY(Float.valueOf(prop));
-						}
-						
-						prop = p.getProperty("width");
-						if (prop != null) {
-							bc.setWidth(Integer.valueOf(prop));
-						}
-						
-						prop = p.getProperty("height");
-						if (prop != null) {
-							bc.setHeight(Integer.valueOf(prop));
-						}
-						
-						prop = p.getProperty("alpha");
-						if (prop != null) {
-							bc.setAlpha(Integer.valueOf(prop));
-						}
-						
-						prop = p.getProperty("scale");
-						if (prop != null) {
-							bc.setScale(Float.valueOf(prop));
-						}
-						
-						prop = p.getProperty("emulatedButton");
-						if (prop != null) {
-							try {
-								Field f = KeyEvent.class.getDeclaredField(prop);
-								Integer vk = f.getInt(null);
-								bc.setKey(vk.intValue());						
-							} catch (SecurityException e) {
-								Log.e(LOG_TAG, "SecurityException throwed during parsing configuration.");
-								e.printStackTrace();
-							} catch (NoSuchFieldException e) {
-								Log.e(LOG_TAG, "NoSuchFieldException throwed during parsing configuration.");
-								e.printStackTrace();
-							}
-						}
-						
-						componentConfigs.add(bc);
-					} else if (child.getName().equalsIgnoreCase("Image")) {
-						ImageConfig ic = new ImageConfig();
-						Properties p = child.getAttributes();
-						
-						String prop = p.getProperty("x");
-						if (prop != null) {
-							ic.setX(Float.valueOf(prop));
-						}
-						
-						prop = p.getProperty("y");
-						if (prop != null) {
-							ic.setY(Float.valueOf(prop));
-						}
-						
-						prop = p.getProperty("width");
-						if (prop != null) {
-							ic.setWidth(Integer.valueOf(prop));
-						}
-						
-						prop = p.getProperty("height");
-						if (prop != null) {
-							ic.setHeight(Integer.valueOf(prop));
-						}
-						
-						prop = p.getProperty("resourceID");
-						if (prop != null) {
-							try {
-								String[] splited = prop.split("\\.");
-								String fieldName = splited[splited.length - 1];
-								Field f = R.drawable.class.getDeclaredField(fieldName);
-								Integer vk = f.getInt(null);
-								ic.setResourceID(vk.intValue());						
-							} catch (SecurityException e) {
-								Log.e(LOG_TAG, "SecurityException throwed during parsing configuration.");
-								e.printStackTrace();
-							} catch (NoSuchFieldException e) {
-								Log.e(LOG_TAG, "NoSuchFieldException throwed during parsing configuration.");
-								e.printStackTrace();
-							}
-						}
-						componentConfigs.add(ic);
+					while(e.hasMoreElements()) {
+						String key = (String) e.nextElement();
+						String uval = p.getProperty(key);
+						Object val = parseXMLValue(uval);
+						ReflectionUtils.setFieldValue(component, key, val);
+					}
+					
+					if (component != null) {
+						componentConfigs.add((ComponentConfig) component);
 					}
 				}
 			} else {
@@ -263,6 +184,29 @@ public class Configuration {
 			}
 		}
 		ui.invalidate();
+	}
+	
+	private Object parseXMLValue(String a) {
+		Pattern floatPattern = Pattern.compile( "([0-9]*)\\.([0-9]*)" );
+		Pattern intPattern = Pattern.compile( "([0-9]*)" );
+		Pattern keyeventPattern = Pattern.compile( "KeyEvent.*" );
+		Pattern resourcePattern = Pattern.compile( "(R)(\\.)(.*)" );
+		Pattern stringPattern = Pattern.compile( "(['])(.*)(['])" );
+
+		if (floatPattern.matcher(a).matches()) {
+			return Float.parseFloat(a);
+		} else if (intPattern.matcher(a).matches()) {
+			return Integer.parseInt(a);
+		} else if (resourcePattern.matcher(a).matches()) {
+			return ReflectionUtils.getFieldValue(R.drawable.class, a.substring(a.lastIndexOf('.') + 1));
+		} else if (stringPattern.matcher(a).matches()) {
+			return a.substring(1, a.length() - 1);
+		} else if (keyeventPattern.matcher(a).matches()) {
+			String[] splited = a.split("\\.");
+			return splited.length == 2 ? ReflectionUtils.getFieldValue(KeyEvent.class, splited[1]) : a;
+		} else {
+			return a;
+		}
 	}
 	
 }
