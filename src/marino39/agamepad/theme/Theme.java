@@ -17,8 +17,8 @@ public class Theme {
 	public Theme(Resources r) {
         background = BitmapFactory.decodeResource(r, R.drawable.bg1);
         mouseController = BitmapFactory.decodeResource(r, R.drawable.mv_ball);
-        buttonNotPressed = BitmapFactory.decodeResource(r, R.drawable.button);
-        buttonPressed = BitmapFactory.decodeResource(r, R.drawable.button_pressed);
+        buttonNotPressed = BitmapFactory.decodeResource(r, R.drawable.button_1);
+        buttonPressed = BitmapFactory.decodeResource(r, R.drawable.button_2);
 	}
 
 	public Bitmap getBackground() {

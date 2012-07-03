@@ -189,7 +189,7 @@ public class Configuration {
 	private Object parseXMLValue(String a) {
 		Pattern floatPattern = Pattern.compile( "([0-9]*)\\.([0-9]*)" );
 		Pattern intPattern = Pattern.compile( "([0-9]*)" );
-		Pattern keyeventPattern = Pattern.compile( "KeyEvent.*" );
+		Pattern keyeventPattern = Pattern.compile( "(KeyEvent)(\\.)(.*)" );
 		Pattern resourcePattern = Pattern.compile( "(R)(\\.)(.*)" );
 		Pattern stringPattern = Pattern.compile( "(['])(.*)(['])" );
 
