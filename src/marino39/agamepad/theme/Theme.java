@@ -15,10 +15,14 @@ public class Theme {
 	private Bitmap buttonNotPressed = null;
 	
 	public Theme(Resources r) {
-        background = BitmapFactory.decodeResource(r, R.drawable.bg1);
-        mouseController = BitmapFactory.decodeResource(r, R.drawable.mv_ball);
-        buttonNotPressed = BitmapFactory.decodeResource(r, R.drawable.button_1);
-        buttonPressed = BitmapFactory.decodeResource(r, R.drawable.button_2);
+		BitmapFactory.Options options = new BitmapFactory.Options();
+		options.inTargetDensity = 1;
+		options.inDensity = 1;
+		
+        background = BitmapFactory.decodeResource(r, R.drawable.bg1, options);
+        mouseController = BitmapFactory.decodeResource(r, R.drawable.mouse_controller, options);
+        buttonNotPressed = BitmapFactory.decodeResource(r, R.drawable.button_1, options);
+        buttonPressed = BitmapFactory.decodeResource(r, R.drawable.button_2, options);
 	}
 
 	public Bitmap getBackground() {

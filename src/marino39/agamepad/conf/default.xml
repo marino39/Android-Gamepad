@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Configuration>
 	<Image x="0" y="0" width="1280" height="720" resourceID="R.drawable.bg1"></Image>
-	<Button label="'1'" x="870" y="470" alpha="175" scale="0.5" emulatedButton="VK_1"></Button>
-	<Button label="'2'" x="965" y="470" alpha="175" scale="0.5" emulatedButton="VK_1"></Button>
-	<Button label="'3'" x="1060" y="470" alpha="175" scale="0.5" emulatedButton="VK_1"></Button>
-	<Button label="'4'" x="1155" y="470" alpha="175" scale="0.5" emulatedButton="VK_1"></Button>
-	<Button label="'m1'" x="865" y="570" width="205" height="180" alpha="175" emulatedButton="VK_1"></Button>
-	<Button label="'m2'" x="1055" y="570" width="205" height="180" alpha="175" emulatedButton="VK_1"></Button>
+	<Button label="'1'" x="860" y="470" alpha="175" scale="0.349" emulatedButton="VK_1"></Button>
+	<Button label="'2'" x="960" y="470" alpha="175" scale="0.349" emulatedButton="VK_1"></Button>
+	<Button label="'3'" x="1060" y="470" alpha="175" scale="0.349" emulatedButton="VK_1"></Button>
+	<Button label="'4'" x="1160" y="470" alpha="175" scale="0.349" emulatedButton="VK_1"></Button>
+	<Button label="'m1'" x="859" y="574" alpha="175" width="210" height="160" emulatedButton="VK_1"></Button>
+	<Button label="'m2'" x="1059" y="574" alpha="175" width="210" height="160" emulatedButton="VK_1"></Button>
+	<MouseController x="30" y="430" alpha="175"></MouseController>
 </Configuration>

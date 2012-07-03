@@ -51,36 +51,6 @@ public class AndroidGamepadActivity extends Activity {
         Configuration c = Configuration.getDefaultConfiguration(getResources());
         c.populate(main);
         
-        Bitmap msc = BitmapFactory.decodeResource(getResources(), R.drawable.mouse_controller);
-        final marino39.ui.components.MouseController mouseController = new MouseController(new Point(50, 460), msc);
-        Point size = mouseController.getSize();
-        mouseController.setSize(new Point((int) (size.x * 0.65), (int) (size.y * 0.65))); 
-        mouseController.setAlpha(150);
-        mouseController.setListener(new UITouchEventListener() {
-			
-			@Override
-			public void onUp(MotionEvent e) {
-				process(e);
-			}
-			
-			@Override
-			public void onMove(MotionEvent e) {
-				process(e);
-				Log.e("Activity", "MOVE EVENT");
-			}
-			
-			@Override
-			public void onDown(MotionEvent e) {
-				process(e);
-			}
-			
-			private void process(MotionEvent e) {
-
-			}
-		});
-        main.addUIComponent(mouseController);
-        main.invalidate();
-        
         // Server Connection
         /*Bundle extras = getIntent().getExtras();
 		if (extras == null) {
