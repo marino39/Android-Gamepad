@@ -7,12 +7,17 @@ import java.net.SocketException;
 import java.util.ArrayList;
 import java.util.List;
 
+import marino39.agamepad.AndroidGamepadService.AGPServerServiceBinder;
 import marino39.agamepad.R;
+import marino39.agamepad.net.BroadcastReceiver;
 
 import android.app.Activity;
+import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
+import android.content.ServiceConnection;
 import android.os.Bundle;
+import android.os.IBinder;
 import android.os.PowerManager;
 import android.view.View;
 import android.widget.AdapterView;
@@ -27,10 +32,16 @@ public class ServerListActivity extends Activity {
 	private ListView serverList = null;
 	private List<String> serverListArray = null;
 	
+	private AndroidGamepadService mService = null;
+	private AndroidGamepadService.AGPServerServiceBinder mBinder = null;
+	private Object lock = new Object();
+	
 	public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main);
         serverListArray = new ArrayList<String>();
+        Intent intent = new Intent(this, AndroidGamepadService.class);
+        bindService(intent, mConnection, Context.BIND_AUTO_CREATE);
         
         serverList = (ListView) findViewById(R.id.listView1);
         if (serverList != null) {
@@ -51,57 +62,64 @@ public class ServerListActivity extends Activity {
         		
         	});		
         }
-        
+
         new Thread(new Runnable() {
 			
 			@Override
 			public void run() {
-				DatagramSocket ds = null;
-				try {
-					ds = new DatagramSocket(25078);
-					ds.setBroadcast(true);
-					ds.setSoTimeout(5000);
-				} catch (SocketException e) {
-					e.printStackTrace();
-				}
-				
 				while (true) {
 					try {
-						byte[] buf = new byte[1024];
-		                DatagramPacket packet = new DatagramPacket(buf, buf.length);
-						ds.receive(packet);
-						int len = packet.getLength();
-						String server = new String(packet.getData());
-						server = server.substring(0, len);
-						boolean found = false;
-						for (int i = 0; i < serverListArray.size(); i++) {
-							if (serverListArray.get(i).equalsIgnoreCase(server)) {
-								found = true;
-								break;
+						if (mService != null) {
+							BroadcastReceiver br = mService
+									.getBroadcastClient();
+							List<BroadcastReceiver.ServerInfo> siList = br
+									.getListCopy();
+							serverListArray = new ArrayList<String>();
+							for (int i = 0; i < siList.size(); i++) {
+								BroadcastReceiver.ServerInfo si = siList.get(i);
+								serverListArray.add(si.address + ":" + si.port);
 							}
-						}
-						
-						if (found == false) {
-							serverListArray.add(server);
+
 							serverList.post(new Runnable() {
-								
+
 								@Override
 								public void run() {
-									serverList.setAdapter(new ArrayAdapter<String>(getApplicationContext(), R.layout.list, serverListArray));
+									serverList
+											.setAdapter(new ArrayAdapter<String>(
+													getApplicationContext(),
+													R.layout.list,
+													serverListArray));
 									serverList.invalidate();
 								}
-								
+
 							});
 						}
-						Thread.sleep(200);
+						Thread.sleep(500);
 					} catch (InterruptedException e) {
-						e.printStackTrace();
-					} catch (IOException e) {
 						e.printStackTrace();
 					}
 				}
 			}
+			
 		}).start();
+        
     }
 	
+	/** Defines callbacks for service binding, passed to bindService() */
+    private ServiceConnection mConnection = new ServiceConnection() {
+
+		@Override
+		public void onServiceConnected(ComponentName cName, IBinder iBinder) {
+			synchronized (lock) {
+				mBinder = (AGPServerServiceBinder) iBinder;
+				mService = mBinder.getService();
+				lock.notify();
+			}
+		}
+
+		@Override
+		public void onServiceDisconnected(ComponentName arg0) {
+			mService = null;
+		}
+    };
 }
