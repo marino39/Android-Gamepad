@@ -477,4 +477,21 @@ public class AndroidGamepadActivity extends Activity {
         this.mWakeLock.release();
         super.onDestroy();
     }
+
+	public IBinder getmBinder() {
+		return mBinder;
+	}
+
+	public void setmBinder(IBinder mBinder) {
+		this.mBinder = mBinder;
+	}
+
+	public AndroidGamepadService getmService() {
+		return mService;
+	}
+
+	public void setmService(AndroidGamepadService mService) {
+		this.mService = mService;
+	}
+    
 }

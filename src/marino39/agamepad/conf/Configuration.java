@@ -14,6 +14,7 @@ import java.util.regex.Pattern;
 import marino39.agamepad.AndroidGamepadActivity;
 import marino39.agamepad.KeyEvent;
 import marino39.agamepad.R;
+import marino39.agamepad.net.AndroidGamepadClient;
 import marino39.agamepad.theme.Theme;
 import marino39.ui.components.UIComponent;
 import marino39.ui.main.UIMain;
@@ -27,6 +28,7 @@ import net.n3.nanoxml.XMLParserFactory;
 
 import android.content.res.Resources;
 import android.location.Address;
+import android.os.IBinder;
 import android.util.Log;
 
 public class Configuration {
@@ -219,6 +221,15 @@ public class Configuration {
 		} else {
 			return a;
 		}
+	}
+	
+	public AndroidGamepadClient getAndroidGamepadClient() {
+		IBinder binder = mainActivity.getmBinder();
+		if (binder.isBinderAlive()) {
+			return mainActivity.getmService().getAndroidGamepadClient();
+		}
+		
+		return null;
 	}
 	
 }

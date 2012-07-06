@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Configuration>
 	<Image x="0" y="0" width="1280" height="720" resourceID="R.drawable.bg1"></Image>
-	<Button label="'1'" x="860" y="450" alpha="175" scale="0.349" emulatedButton="VK_1"></Button>
-	<Button label="'2'" x="960" y="450" alpha="175" scale="0.349" emulatedButton="VK_1"></Button>
-	<Button label="'3'" x="1060" y="450" alpha="175" scale="0.349" emulatedButton="VK_1"></Button>
-	<Button label="'4'" x="1160" y="450" alpha="175" scale="0.349" emulatedButton="VK_1"></Button>
-	<Button label="'m1'" x="858" y="550" alpha="175" width="210" height="160" emulatedButton="VK_1"></Button>
-	<Button label="'m2'" x="1058" y="550" alpha="175" width="210" height="160" emulatedButton="VK_1"></Button>
+	<Button label="'1'" x="860" y="450" alpha="175" scale="0.349" emulatedButton="KeyEvent.VK_1"></Button>
+	<Button label="'2'" x="960" y="450" alpha="175" scale="0.349" emulatedButton="KeyEvent.VK_2"></Button>
+	<Button label="'3'" x="1060" y="450" alpha="175" scale="0.349" emulatedButton="KeyEvent.VK_3"></Button>
+	<Button label="'4'" x="1160" y="450" alpha="175" scale="0.349" emulatedButton="KeyEvent.VK_4"></Button>
+	<Button label="'m1'" x="858" y="550" alpha="175" width="210" height="160" emulatedButton="KeyEvent.BUTTON1_MASK"></Button>
+	<Button label="'m2'" x="1058" y="550" alpha="175" width="210" height="160" emulatedButton="KeyEvent.BUTTON3_MASK"></Button>
 	<MouseController x="30" y="430" alpha="175"></MouseController>
 </Configuration>

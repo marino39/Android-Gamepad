@@ -3,6 +3,11 @@ package marino39.agamepad.conf;
 import android.graphics.Point;
 import android.util.Log;
 import android.view.MotionEvent;
+import marino39.agamepad.KeyEvent;
+import marino39.agamepad.net.AndroidGamepadClient;
+import marino39.agamepad.protocol.KeyDownPacket;
+import marino39.agamepad.protocol.KeyUpPacket;
+import marino39.agamepad.protocol.Packet;
 import marino39.agamepad.theme.Theme;
 import marino39.ui.UITouchEventListener;
 import marino39.ui.components.Button;
@@ -14,13 +19,15 @@ public class ButtonConfig implements ComponentConfig {
 	private float x = -1, y = -1;
 	private float scale = -1;
 	private String label = null;
-	private int key = -1;
+	private int emulatedButton = -1;
 	private int alpha = -1;
 	private int width = -1, height = -1;
 
 	@Override
 	public UIComponent getConfiguredComponent() {
-		Theme t = Configuration.getCurrentInstance(null, false).getTheme();
+		Configuration config = Configuration.getCurrentInstance(null, false);
+		final AndroidGamepadClient agc = config.getAndroidGamepadClient();
+		Theme t = config.getTheme();
 		Button b = new Button(new Point((int) x, (int) y), t.getButtonNotPressed(), t.getButtonPressed(), label);
 		
 		if (width != -1 && height != -1) {
@@ -34,6 +41,30 @@ public class ButtonConfig implements ComponentConfig {
 		
 		if (alpha != -1) {
 			b.setAlpha(alpha);
+		}
+		
+		if (agc != null) {
+			b.setListener(new UITouchEventListener() {
+
+				@Override
+				public void onUp(MotionEvent e) {
+					if (emulatedButton != -1) {
+						agc.sendPacket(new KeyUpPacket(new byte[] {Packet.OPERATION_KEY_UP, 1, (byte) emulatedButton}));
+					}
+				}
+
+				@Override
+				public void onMove(MotionEvent e) {
+					
+				}
+
+				@Override
+				public void onDown(MotionEvent e) {					
+					if (emulatedButton != -1) {
+						agc.sendPacket(new KeyUpPacket(new byte[] {Packet.OPERATION_KEY_DOWN, 1, (byte) emulatedButton}));
+					}
+				}
+			});
 		}
 		
 		return b;
@@ -63,12 +94,12 @@ public class ButtonConfig implements ComponentConfig {
 		this.label = label;
 	}
 
-	public int getKey() {
-		return key;
+	public int getEmulatedButton() {
+		return emulatedButton;
 	}
 
-	public void setKey(int key) {
-		this.key = key;
+	public void setEmulatedButton(int emulatedButton) {
+		this.emulatedButton = emulatedButton;
 	}
 
 	public float getScale() {
