@@ -24,7 +24,7 @@ public class AndroidGamepadClient {
 			public void run() {
 				try {
 					server = new Socket(si.address, si.port);
-					server.setTrafficClass(0x10); // LOW_DELAY - may cause some problems with some routers 
+					server.setTrafficClass(0x10 + 0x08); // LOW_DELAY & IPTOS_THROUGHPUT - may cause some problems with some routers 
 					connected = true;
 				} catch (UnknownHostException e) {
 					e.printStackTrace();
