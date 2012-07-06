@@ -10,6 +10,7 @@ import marino39.ui.*;
 import marino39.ui.components.Image;
 import marino39.ui.components.MouseController;
 import marino39.ui.main.UIMain;
+import marino39.utils.IBinderWrapper;
 import marino39.agamepad.conf.Configuration;
 import marino39.agamepad.protocol.*;
 
@@ -19,6 +20,8 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Point;
 import android.os.Bundle;
+import android.os.IBinder;
+import android.os.Parcel;
 import android.os.PowerManager;
 import android.os.PowerManager.WakeLock;
 import android.util.DisplayMetrics;
@@ -35,6 +38,8 @@ public class AndroidGamepadActivity extends Activity {
 	private PadView diablo3Pad = null;
 	private WakeLock mWakeLock;
 	private Socket server = null;
+	private IBinder mBinder = null;
+	private AndroidGamepadService mService = null;
 	
 	@Override
 	public boolean onTouchEvent(MotionEvent event) {
@@ -47,9 +52,20 @@ public class AndroidGamepadActivity extends Activity {
         UIMain main = new UIMain(this);
         setContentView(main);
         
-        // Configuration
-        Configuration c = Configuration.getDefaultConfiguration(this);
-        c.populate(main);
+        // Loading Data
+        Bundle extras = getIntent().getExtras();
+        IBinderWrapper iBinderWrapped = (IBinderWrapper) extras.get("IBinder");
+        mBinder = iBinderWrapped.binder;
+        
+        if (mBinder.isBinderAlive()) {
+        	mService = ((AndroidGamepadService.AGPServerServiceBinder) mBinder).getService();
+        	
+        	// Configuration
+        	Configuration c = Configuration.getDefaultConfiguration(this);
+            c.populate(main);
+        }
+        
+       
         
         // Server Connection
         /*Bundle extras = getIntent().getExtras();

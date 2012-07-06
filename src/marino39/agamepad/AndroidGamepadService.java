@@ -1,5 +1,6 @@
 package marino39.agamepad;
 
+import marino39.agamepad.net.AndroidGamepadClient;
 import marino39.agamepad.net.BroadcastReceiver;
 import android.app.Service;
 import android.content.Intent;
@@ -15,6 +16,7 @@ import android.os.IBinder;
 public class AndroidGamepadService extends Service {
 
 	private final BroadcastReceiver broadcastClient = new BroadcastReceiver();
+	private final AndroidGamepadClient agClient = new AndroidGamepadClient();
 	private final AGPServerServiceBinder binder = new AGPServerServiceBinder();
 	
 	@Override
@@ -22,6 +24,7 @@ public class AndroidGamepadService extends Service {
 		if (!broadcastClient.isRunning()) {
 			broadcastClient.start();
 		}
+		
 		return binder;
 	}
 	
@@ -42,4 +45,8 @@ public class AndroidGamepadService extends Service {
 	public BroadcastReceiver getBroadcastClient() {
 		return broadcastClient;
 	}	
+	
+	public AndroidGamepadClient getAndroidGamepadClient() {
+		return agClient;
+	}
 }

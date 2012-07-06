@@ -27,22 +27,8 @@ public class BroadcastReceiver implements Runnable {
 	private int port = -1;
 	private List<ServerInfo> serverList = new ArrayList<ServerInfo>();
 	
-	
 	private boolean running = false;
 	private boolean stop = false;
-	
-	/**
-	 * Class designed to hold info about servers.
-	 * 
-	 * @author Marcin Gorzynski
-	 *
-	 */
-	public class ServerInfo {
-		public String name = "";
-		public String address = "";
-		public Date lastUpdate = null;
-		public int port = -1;
-	}
 	
 	@Override
 	public void run() {
@@ -176,7 +162,7 @@ public class BroadcastReceiver implements Runnable {
 	 */
 	public List<ServerInfo> getListCopy() {
 		synchronized (serverList) {
-			return new ArrayList<BroadcastReceiver.ServerInfo>(serverList);
+			return new ArrayList<ServerInfo>(serverList);
 		}
 	}
 	
