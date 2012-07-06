@@ -20,7 +20,7 @@ public class ButtonConfig implements ComponentConfig {
 
 	@Override
 	public UIComponent getConfiguredComponent() {
-		Theme t = Configuration.getCurrentInstance(null).getTheme();
+		Theme t = Configuration.getCurrentInstance(null, false).getTheme();
 		Button b = new Button(new Point((int) x, (int) y), t.getButtonNotPressed(), t.getButtonPressed(), label);
 		
 		if (width != -1 && height != -1) {

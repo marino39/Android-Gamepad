@@ -48,7 +48,7 @@ public class AndroidGamepadActivity extends Activity {
         setContentView(main);
         
         // Configuration
-        Configuration c = Configuration.getDefaultConfiguration(getResources());
+        Configuration c = Configuration.getDefaultConfiguration(this);
         c.populate(main);
         
         // Server Connection

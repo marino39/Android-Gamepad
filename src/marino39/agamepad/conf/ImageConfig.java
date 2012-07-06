@@ -16,7 +16,7 @@ public class ImageConfig implements ComponentConfig {
 	
 	@Override
 	public UIComponent getConfiguredComponent() {
-		Configuration c = Configuration.getCurrentInstance(null);
+		Configuration c = Configuration.getCurrentInstance(null, false);
 		Log.e(LOG_TAG, "" + resourceID);
 		Bitmap im = BitmapFactory.decodeResource(c.getAndroidResources(), resourceID);
 		

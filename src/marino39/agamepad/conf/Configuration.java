@@ -11,6 +11,7 @@ import java.util.Set;
 import java.util.Vector;
 import java.util.regex.Pattern;
 
+import marino39.agamepad.AndroidGamepadActivity;
 import marino39.agamepad.KeyEvent;
 import marino39.agamepad.R;
 import marino39.agamepad.theme.Theme;
@@ -37,23 +38,39 @@ public class Configuration {
 	
 	private List<ComponentConfig> componentConfigs = new ArrayList<ComponentConfig>();
 	private Theme theme = null;
-	private Resources androidResources = null;
+	private AndroidGamepadActivity mainActivity = null;
 	
 	/** 
 	 * Private default constructor.
 	 */
-	private Configuration(Resources r) {
-		theme = new Theme(r);
-		androidResources = r;
+	private Configuration(AndroidGamepadActivity activity) {
+		mainActivity = activity;
+		theme = new Theme(mainActivity.getResources());
 	}
 	
 	/**
 	 * It returns default configuration supplied with application.
 	 * @return
 	 */
-	public static Configuration getDefaultConfiguration(Resources r) {	
-		conf = new Configuration(r);
+	public static Configuration getDefaultConfiguration(AndroidGamepadActivity activity) {		
+		conf = new Configuration(activity);
+			
+		if (!conf.loadDataFromXML(loadDefaultXML())) {
+			Log.e(LOG_TAG, "Configuration::loadXMLFile() returned false.");
+			return null;
+		}
+
+		return conf;
+	}
+	
+	
+	/**
+	 * Loads XML file into program.
+	 * @return String containing XML tags.
+	 */
+	private static String loadDefaultXML() {
 		InputStream in = Configuration.class.getResourceAsStream(CLASS_PATH_DEFAULT_CONFIG_DIR);
+		
 		if (in == null) {
 			Log.e(LOG_TAG, "Could not get default.xml from classpath.");
 			return null;
@@ -63,18 +80,13 @@ public class Configuration {
 			int len = in.available();
 			byte[] data = new byte[len];
 			in.read(data, 0, len);
-			String xml = new String(data);
-			
-			if (!conf.loadXMLFile(xml)) {
-				Log.e(LOG_TAG, "Configuration::loadXMLFile() returned false.");
-				return null;
-			}
+			return  new String(data);		
 		} catch (IOException e) {
 			Log.e(LOG_TAG, "IOException during loading default.xml");
 			e.printStackTrace();
 		}
-
-		return conf;
+		
+		return null;
 	}
 	
 	/**
@@ -94,12 +106,16 @@ public class Configuration {
 	}
 	
 	/**
-	 * Get's current configuration.
+	 * Get's current instance of Configuration. If createNew is true 
+	 * it will create new instance when there isn't any at the moment.
+	 * 
+	 * @param activity
+	 * @param createNew
 	 * @return
 	 */
-	public static Configuration getCurrentInstance(Resources r) {
-		if (conf == null) {
-			return getDefaultConfiguration(r);
+	public static Configuration getCurrentInstance(AndroidGamepadActivity activity, boolean createNew) {
+		if (conf == null && createNew) {
+			return getDefaultConfiguration(activity);
 		}
 		return conf;
 	}
@@ -113,11 +129,7 @@ public class Configuration {
 	}
 
 	public Resources getAndroidResources() {
-		return androidResources;
-	}
-
-	public void setAndroidResources(Resources androidResources) {
-		this.androidResources = androidResources;
+		return mainActivity.getResources();
 	}
 
 	/**
@@ -125,7 +137,7 @@ public class Configuration {
 	 * @param is
 	 * @param c
 	 */
-	private boolean loadXMLFile(String xml) {
+	private boolean loadDataFromXML(String xml) {
 		try {
 			IXMLParser parser = XMLParserFactory.createDefaultXMLParser();
 			IXMLReader reader = StdXMLReader.stringReader(xml);

@@ -16,7 +16,7 @@ public class MouseControllerConfig implements ComponentConfig {
 
 	@Override
 	public UIComponent getConfiguredComponent() {
-		Theme t = Configuration.getCurrentInstance(null).getTheme();
+		Theme t = Configuration.getCurrentInstance(null, false).getTheme();
 		MouseController mc = new MouseController(new Point((int) x, (int) y), t.getMouseController());
 		
 		if (width != -1 && height != -1) {
