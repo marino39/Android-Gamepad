@@ -2,12 +2,10 @@ package marino39.agamepad.conf;
 
 import java.io.IOException;
 import java.io.InputStream;
-import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.Enumeration;
 import java.util.List;
 import java.util.Properties;
-import java.util.Set;
 import java.util.Vector;
 import java.util.regex.Pattern;
 
@@ -16,6 +14,7 @@ import marino39.agamepad.KeyEvent;
 import marino39.agamepad.R;
 import marino39.agamepad.net.AndroidGamepadClient;
 import marino39.agamepad.theme.Theme;
+import marino39.agamepad.ui.AGUIMain;
 import marino39.ui.components.UIComponent;
 import marino39.ui.main.UIMain;
 import marino39.utils.ReflectionUtils;
@@ -27,10 +26,17 @@ import net.n3.nanoxml.XMLException;
 import net.n3.nanoxml.XMLParserFactory;
 
 import android.content.res.Resources;
-import android.location.Address;
 import android.os.IBinder;
 import android.util.Log;
 
+/**
+ * Class that holds all configuration of app. It also
+ * takes part in comunication between varius part of
+ * Android Gamepad.
+ * 
+ * @author Marcin Gorzynski
+ *
+ */
 public class Configuration {
 	
 	private static final String LOG_TAG = "[Configuration]";
@@ -200,6 +206,12 @@ public class Configuration {
 		ui.invalidate();
 	}
 	
+	/**
+	 * Parses XML attribute and assign it to proper variable type. 
+	 * 
+	 * @param a attribute contents to parse.
+	 * @return variable containing parsed data.
+	 */
 	private Object parseXMLValue(String a) {
 		Pattern floatPattern = Pattern.compile( "([0-9]*)\\.([0-9]*)" );
 		Pattern intPattern = Pattern.compile( "([0-9]*)" );
@@ -223,6 +235,11 @@ public class Configuration {
 		}
 	}
 	
+	/**
+	 * Gets current Android Gamepad client.
+	 * 
+	 * @return
+	 */
 	public AndroidGamepadClient getAndroidGamepadClient() {
 		IBinder binder = mainActivity.getmBinder();
 		if (binder.isBinderAlive()) {

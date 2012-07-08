@@ -13,6 +13,7 @@ public class Theme {
 	private Bitmap mouseController = null;
 	private Bitmap buttonPressed = null;
 	private Bitmap buttonNotPressed = null;
+	private Bitmap settingsIcon = null;
 	
 	public Theme(Resources r) {
 		BitmapFactory.Options options = new BitmapFactory.Options();
@@ -23,6 +24,7 @@ public class Theme {
         mouseController = BitmapFactory.decodeResource(r, R.drawable.mouse_controller, options);
         buttonNotPressed = BitmapFactory.decodeResource(r, R.drawable.button_1, options);
         buttonPressed = BitmapFactory.decodeResource(r, R.drawable.button_2, options);
+        settingsIcon = BitmapFactory.decodeResource(r, R.drawable.settings_icon, options);
 	}
 
 	public Bitmap getBackground() {
@@ -55,6 +57,14 @@ public class Theme {
 
 	public void setButtonNotPressed(Bitmap buttonNotPressed) {
 		this.buttonNotPressed = buttonNotPressed;
+	}
+
+	public Bitmap getSettingsIcon() {
+		return settingsIcon;
+	}
+
+	public void setSettingsIcon(Bitmap settingsIcon) {
+		this.settingsIcon = settingsIcon;
 	}
 	
 }

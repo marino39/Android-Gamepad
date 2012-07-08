@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="hello">Hello World, Diablo3GamePadActivity!</string>
-    <string name="app_name">Diablo3GamePad</string>
+    <string name="app_name">Android Gamepad</string>
 </resources>

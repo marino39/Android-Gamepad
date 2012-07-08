@@ -100,15 +100,26 @@ public class BroadcastReceiver implements Runnable {
 		}
 	}
 	
+	/**
+	 * Starts Broadcast Receiver.
+	 */
 	public void start() {
 		Thread t = new Thread(this);
 		t.start();
 	}
 	
+	/**
+	 * Stops Broadcast Receiver.
+	 */
 	public void stop() {
 		stop = true;
 	}
 	
+	/**
+	 * Checks if Broadcast Receiver is running.
+	 * 
+	 * @return
+	 */
 	public boolean isRunning() {
 		return running;
 	}
