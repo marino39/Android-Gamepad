@@ -4,6 +4,7 @@ import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Point;
+import android.util.Log;
 import android.view.MotionEvent;
 import marino39.agamepad.conf.Configuration;
 import marino39.agamepad.theme.Theme;
@@ -39,7 +40,6 @@ public class AGUIMain extends UIMain {
 				
 				@Override
 				public void onUp(MotionEvent e) {
-					// TODO Auto-generated method stub
 					
 				}
 				
@@ -54,15 +54,14 @@ public class AGUIMain extends UIMain {
 					
 				}
 			});
+			
+			addUIComponent(settingsButton);
 		}
 	}
 	
 	@Override
 	protected void onDraw(Canvas canvas) {
 		super.onDraw(canvas);
-		
-		settingsButton.setAlpha((int) (255 * baseVisibility));
-		settingsButton.draw(canvas);
 		
 		if (!editorMode) {
 			

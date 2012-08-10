@@ -28,6 +28,7 @@ public class Button implements UIComponent, Touchable {
 	private Matrix mDraw;
 	private int alpha = 255;
 	private String label = "-";
+	private int zindex = 1;
 	
 	private UITouchEventListener listener = null;
 	
@@ -139,6 +140,16 @@ public class Button implements UIComponent, Touchable {
 	@Override
 	public int getAlpha() {
 		return alpha;
+	}
+
+	@Override
+	public void setzindex(int zindex) {
+		this.zindex = zindex;
+	}
+
+	@Override
+	public int getzindex() {
+		return zindex;
 	}
 	
 }

@@ -15,6 +15,7 @@ public class Image implements UIComponent {
 	private Bitmap image = null;
 	private Matrix mDraw;
 	private int alpha = 255;
+	private int zindex = 0;
 	
 	
 	public Image(Bitmap image) {
@@ -83,5 +84,15 @@ public class Image implements UIComponent {
 	@Override
 	public int getAlpha() {
 		return alpha;
+	}
+
+	@Override
+	public void setzindex(int zindex) {
+		this.zindex = zindex;
+	}
+
+	@Override
+	public int getzindex() {
+		return zindex;
 	}
 }

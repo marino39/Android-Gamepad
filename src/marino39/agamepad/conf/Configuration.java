@@ -1,5 +1,8 @@
 package marino39.agamepad.conf;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
@@ -26,6 +29,7 @@ import net.n3.nanoxml.XMLException;
 import net.n3.nanoxml.XMLParserFactory;
 
 import android.content.res.Resources;
+import android.os.Environment;
 import android.os.IBinder;
 import android.util.Log;
 
@@ -42,6 +46,7 @@ public class Configuration {
 	private static final String LOG_TAG = "[Configuration]";
 	private static final String CONFIG_DIR = "AndroidGamepad/";
 	private static final String CLASS_PATH_DEFAULT_CONFIG_DIR = "/marino39/agamepad/conf/default.xml";
+	private static final String BASE_DIR = Environment.getExternalStorageDirectory().getPath() + "/AndroidGamePad";
 	private static Configuration conf = null;
 	
 	private List<ComponentConfig> componentConfigs = new ArrayList<ComponentConfig>();
@@ -77,20 +82,62 @@ public class Configuration {
 	 * @return String containing XML tags.
 	 */
 	private static String loadDefaultXML() {
-		InputStream in = Configuration.class.getResourceAsStream(CLASS_PATH_DEFAULT_CONFIG_DIR);
+		File baseDir = new File(BASE_DIR);
+		File guiDescDir = new File(BASE_DIR + "/gui");
+		File configFile = new File(BASE_DIR + "/config.xml");
 		
-		if (in == null) {
-			Log.e(LOG_TAG, "Could not get default.xml from classpath.");
-			return null;
+		if (!baseDir.exists()) {
+			baseDir.mkdir();
+			if (!guiDescDir.exists()) {
+				guiDescDir.mkdir();
+			}
 		}
+		
+		if (configFile.exists()) {
+			String config;
+			if ((config = loadFile(configFile)) != null) {
 				
+			}
+		} else {
+			InputStream in = Configuration.class
+					.getResourceAsStream(CLASS_PATH_DEFAULT_CONFIG_DIR);
+
+			if (in == null) {
+				Log.e(LOG_TAG, "Could not get default.xml from classpath.");
+				return null;
+			}
+
+			try {
+				int len = in.available();
+				byte[] data = new byte[len];
+				in.read(data, 0, len);
+				return new String(data);
+			} catch (IOException e) {
+				Log.e(LOG_TAG, "IOException during loading default.xml");
+				e.printStackTrace();
+			}
+		}
+		return null;
+	}
+	
+	/**
+	 * Loads File to String array
+	 * @param f file to load
+	 * @return string with file content
+	 */
+	private static String loadFile(File f) {
 		try {
+			InputStream in = new FileInputStream(f);
 			int len = in.available();
 			byte[] data = new byte[len];
 			in.read(data, 0, len);
-			return  new String(data);		
+			
+			return new String(data);
+		} catch (FileNotFoundException e) {
+			Log.e(LOG_TAG, "FileNotFoundException during loading " + f.getName());
+			e.printStackTrace();
 		} catch (IOException e) {
-			Log.e(LOG_TAG, "IOException during loading default.xml");
+			Log.e(LOG_TAG, "IOException during loading " + f.getName());
 			e.printStackTrace();
 		}
 		

@@ -50,4 +50,8 @@ public interface UIComponent {
 	public void setAlpha(int a);
 	
 	public int getAlpha();
+	
+	public void setzindex(int zindex);
+	
+	public int getzindex();
 }

@@ -18,6 +18,7 @@ public class MouseController implements UIComponent, Touchable {
 	private Matrix mDraw;
 	private int alpha = 255;
 	private int pointerID;
+	private int zindex = 1;
 	
 	private UITouchEventListener listener = null;
 	
@@ -133,6 +134,16 @@ public class MouseController implements UIComponent, Touchable {
 	 */
 	public void setPointerID(int pointerID) {
 		this.pointerID = pointerID;
+	}
+
+	@Override
+	public void setzindex(int zindex) {
+		this.zindex = zindex;
+	}
+
+	@Override
+	public int getzindex() {
+		return zindex;
 	}
 	
 }
