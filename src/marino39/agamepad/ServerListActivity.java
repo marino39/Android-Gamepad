@@ -36,6 +36,7 @@ public class ServerListActivity extends Activity {
 	
 	private ListView serverList = null;
 	private List<String> serverListArray = null;
+	private TextView serverListMessage = null;
 	
 	private AndroidGamepadService mService = null;
 	private AndroidGamepadService.AGPServerServiceBinder mBinder = null;
@@ -43,7 +44,7 @@ public class ServerListActivity extends Activity {
 	
 	public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.main);
+        setContentView(R.layout.server_list);
         serverListArray = new ArrayList<String>();
         Intent intent = new Intent(this, AndroidGamepadService.class);
         bindService(intent, mConnection, Context.BIND_AUTO_CREATE);
@@ -96,7 +97,10 @@ public class ServerListActivity extends Activity {
         		
         	});		
         }
-
+        
+        serverListMessage = (TextView) findViewById(R.id.server_list_message);
+        serverListMessage.setText("If you can't see any servers make sure that Android Gamepad Server is running on your PC.");
+        
         new Thread(new Runnable() {
 			
 			@Override
@@ -120,15 +124,23 @@ public class ServerListActivity extends Activity {
 													getApplicationContext(),
 													R.layout.list,
 													serverListArray));
+									
+									if (serverListArray != null && serverListArray.size() == 0) {
+										serverListMessage.setText("If you can't see any servers make sure that Android Gamepad Server is running on your PC.");
+									} else { 
+										serverListMessage.setText("More info about application is available on www.android-gamepad.com");
+									}
+									
 									serverList.invalidate();
 								}
 
 							});
 						}
-						Thread.sleep(500);
+						Thread.sleep(250);
 					} catch (InterruptedException e) {
 						e.printStackTrace();
 					}
+					
 				}
 			}
 			

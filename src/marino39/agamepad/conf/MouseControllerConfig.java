@@ -68,14 +68,16 @@ public class MouseControllerConfig implements ComponentConfig {
 				Point pos = new Point((int)MouseControllerConfig.this.x, (int)MouseControllerConfig.this.y)/*mouseController.getPosition()*/;
 				final Point size = new Point(width, height)/*mouseController.getSize()*/;
 
-				Log.e(LOG_TAG, "MOVE");
-				Log.e(LOG_TAG, "x: " + x + " y: " + y + " x: " + pos.x + " y: " + pos.y + " width: " + size.x + " height: " + size.y);
-				if (x > pos.x && x < (pos.x + size.x) && y > pos.y
-						&& y < (pos.y + size.y)) {
+				//Log.e(LOG_TAG, "MOVE");
+				//Log.e(LOG_TAG, "x: " + x + " y: " + y + " x: " + pos.x + " y: " + pos.y + " width: " + size.x + " height: " + size.y);
+				float radius = size.x/2;
+				float x_s = x - (pos.x + size.x/2);
+				float y_s = y - (pos.y + size.y/2);
+				float radius_s = (float) Math.sqrt(x_s * x_s + y_s * y_s);
+				if (radius_s < radius) {
 					final float translatedX = (pos.x + size.x / 2 - x) * 2;
 					final float translatedY = (pos.y + size.y / 2 - y) * 2;
-					Log.e(LOG_TAG, "MOVE2");
-					
+
 					agc.sendPacket(new MouseMovePacket(Packet.OPERATION_MOUSE_MOVE,
 							(byte) 0x08, (float) translatedX / (float) size.x,
 							(float) translatedY / (float) size.y));

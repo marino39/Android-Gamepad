@@ -27,9 +27,9 @@ public class ConnectionTypeActivity extends Activity {
 	
 	public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.main);
+        setContentView(R.layout.connection_type_dialog);
         
-        connectionTypeList = (ListView) findViewById(R.id.listView1);
+        connectionTypeList = (ListView) findViewById(R.id.listView2);
         connectionTypeArray = new ArrayList<String>();
         connectionTypeArray.add("WiFi");
         connectionTypeArray.add("Bluetooth");
